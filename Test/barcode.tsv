@@ -1,0 +1,8 @@
+#Please fill in according to "barcode name", "i5", "i7",seperate with comma
+#Please add a "#" if some comments are required
+#Name,i5,i7
+Barcode01,TAACTCGG,TAACAGTT
+Barcode02,ATACTCAA,GCTGAGAA
+Barcode03,ATTGGAGG,TAGTCTAA
+Barcode04,CGGTGACC,TACAGAGG
+Barcode05,ATTGTCAA,TATGTCTT
