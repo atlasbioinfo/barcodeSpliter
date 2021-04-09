@@ -5,6 +5,7 @@ def showError(Mes):
     print("\n\t".join(Mes))
     print("-"*20)
     print("Exit...")
+
     sys.exit()
     
 def trans(seq):
