@@ -1,4 +1,4 @@
-import sys,gzip,argparse,os
+import sys,gzip,argparse,os,time
 
 def showError(Mes):
     print("-"*20)
@@ -99,7 +99,21 @@ def main():
     
     with gzip.open(args.r1,"r") as r1f:
         with gzip.open(args.r2,"r") as r2f:
+            count=0
+            loading="."
             while (True):
+                count+=1
+                if (count % 20000 == 0):
+                    print("Processed "+ str(count)+" reads"+loading,end="\r")
+                    if (len(loading)==1):
+                        loading=".."
+                        continue
+                    if (len(loading)==2):
+                        loading="..."
+                        continue
+                    if (len(loading)==3):
+                        loading="."
+                        continue
                 header1=str(r1f.readline().strip(),encoding="utf8")
                 seq1=str(r1f.readline().strip(),encoding="utf8")
                 quaHeader1=str(r1f.readline().strip(),encoding="utf8")
@@ -124,11 +138,14 @@ def main():
                         readsInfoR2[b].append(seq2)
                         readsInfoR2[b].append(quaHeader2)
                         readsInfoR2[b].append(quality2)
-                        
+            
+            print("Write fastq files into the folder....")            
             for b in readsInfoR1:
                 with open(os.path.join(args.outfolder,b+".R1.fastq"),"w") as out1:
                     with open(os.path.join(args.outfolder,b+".R2.fastq"),"w") as out2:
                         out1.write("\n".join(readsInfoR1[b])+"\n")
                         out2.write("\n".join(readsInfoR2[b])+"\n")
+            print("Success!")
+            
 
 main()
