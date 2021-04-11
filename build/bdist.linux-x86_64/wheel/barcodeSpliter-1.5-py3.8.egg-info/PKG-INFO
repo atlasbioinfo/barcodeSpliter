@@ -1,0 +1,14 @@
+Metadata-Version: 1.2
+Name: barcodeSpliter
+Version: 1.5
+Summary: "barcodeSpliter" can use barcode label to         separate different samples in mixed-sample sequencing.
+Home-page: https://github.com/atlasbioinfo/barcodeSpliter
+Author: Haopeng Yu
+Author-email: atlasbioin4@gmail.com
+License: Apache-2.0
+Description: UNKNOWN
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6

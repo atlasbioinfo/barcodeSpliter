@@ -1,0 +1,11 @@
+LICENSE
+README.md
+pyproject.toml
+setup.py
+src/barcodeSpliter/__init__.py
+src/barcodeSpliter/barcodeSpliter.py
+src/barcodeSpliter.egg-info/PKG-INFO
+src/barcodeSpliter.egg-info/SOURCES.txt
+src/barcodeSpliter.egg-info/dependency_links.txt
+src/barcodeSpliter.egg-info/entry_points.txt
+src/barcodeSpliter.egg-info/top_level.txt

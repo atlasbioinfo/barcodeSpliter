@@ -95,57 +95,67 @@ def main():
 
     # # Initial dict
     barcodeInfo=getBarcodeInfo(args.b)
+    # statBarcode功能待完善
     statBarcode,readsInfoR1,readsInfoR2=initalDict(barcodeInfo)
-    
-    with gzip.open(args.r1,"r") as r1f:
-        with gzip.open(args.r2,"r") as r2f:
-            count=0
-            loading="."
-            while (True):
-                count+=1
-                if (count % 20000 == 0):
-                    print("Processed "+ str(count)+" reads"+loading,end="\r")
-                    if (len(loading)==1):
-                        loading=".."
-                        continue
-                    if (len(loading)==2):
-                        loading="..."
-                        continue
-                    if (len(loading)==3):
-                        loading="."
-                        continue
-                header1=str(r1f.readline().strip(),encoding="utf8")
-                seq1=str(r1f.readline().strip(),encoding="utf8")
-                quaHeader1=str(r1f.readline().strip(),encoding="utf8")
-                quality1=str(r1f.readline().strip(),encoding="utf8")
+    if (args.r1.split(".")[-1]=="gz"):
+        r1f=gzip.open(args.r1,"r")
+    else:
+        r1f=open(args.r1,"r")
+    if (args.r2.split(".")[-1]=="gz"):
+        r2f=gzip.open(args.r2,"r")
+    else:
+        r2f=open(args.r2,"r")
+    count=0
+    loading="."
+    while (True):
+        count+=1
+        if (count % 20000 == 0):
+            print("Processed "+ str(count)+" reads"+loading,end="\r")
+            if (len(loading)==1):
+                loading=".."
+                continue
+            if (len(loading)==2):
+                loading="..."
+                continue
+            if (len(loading)==3):
+                loading="."
+                continue
+        header1=str(r1f.readline().strip(),encoding="utf8")
+        seq1=str(r1f.readline().strip(),encoding="utf8")
+        quaHeader1=str(r1f.readline().strip(),encoding="utf8")
+        quality1=str(r1f.readline().strip(),encoding="utf8")
 
-                header2=str(r2f.readline().strip(),encoding="utf8")
-                seq2=str(r2f.readline().strip(),encoding="utf8")
-                quaHeader2=str(r2f.readline().strip(),encoding="utf8")
-                quality2=str(r2f.readline().strip(),encoding="utf8")
+        header2=str(r2f.readline().strip(),encoding="utf8")
+        seq2=str(r2f.readline().strip(),encoding="utf8")
+        quaHeader2=str(r2f.readline().strip(),encoding="utf8")
+        quality2=str(r2f.readline().strip(),encoding="utf8")
 
-                if (not header1):
-                    break
-                barcodeLabel=judgeIfBarcode(seq1,seq2,barcodeInfo,args.searchRegion)
-                for b in barcodeLabel:
-                    if (barcodeLabel[b]):
-                        readsInfoR1[b].append(header1)
-                        readsInfoR1[b].append(seq1)
-                        readsInfoR1[b].append(quaHeader1)
-                        readsInfoR1[b].append(quality1)
+        if (not header1):
+            break
+        barcodeLabel=judgeIfBarcode(seq1,seq2,barcodeInfo,args.searchRegion)
+        for b in barcodeLabel:
+            if (barcodeLabel[b]):
+                readsInfoR1[b].append(header1)
+                readsInfoR1[b].append(seq1)
+                readsInfoR1[b].append(quaHeader1)
+                readsInfoR1[b].append(quality1)
 
-                        readsInfoR2[b].append(header2)
-                        readsInfoR2[b].append(seq2)
-                        readsInfoR2[b].append(quaHeader2)
-                        readsInfoR2[b].append(quality2)
-            
-            print("Write fastq files into the folder....")            
-            for b in readsInfoR1:
-                with open(os.path.join(args.outfolder,b+".R1.fastq"),"w") as out1:
-                    with open(os.path.join(args.outfolder,b+".R2.fastq"),"w") as out2:
-                        out1.write("\n".join(readsInfoR1[b])+"\n")
-                        out2.write("\n".join(readsInfoR2[b])+"\n")
-            print("Success!")
-            
+                readsInfoR2[b].append(header2)
+                readsInfoR2[b].append(seq2)
+                readsInfoR2[b].append(quaHeader2)
+                readsInfoR2[b].append(quality2)
 
-main()
+                statBarcode[b]
+    print("Write fastq files into the folder....")            
+    for b in readsInfoR1:
+        with gzip.open(os.path.join(args.outfolder,b+".R1.fastq.gz"),"w") as out1:
+            with gzip.open(os.path.join(args.outfolder,b+".R2.fastq.gz"),"w") as out2:
+                out1.write(str("\n".join(readsInfoR1[b])+"\n").encode())
+                out2.write(str("\n".join(readsInfoR2[b])+"\n").encode())
+    print("Success!")
+    r1f.close()
+    r2f.close()
+
+if __name__ == "__main__":
+    main()         
+
