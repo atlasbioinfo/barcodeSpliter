@@ -1,11 +1,11 @@
 from setuptools import setup, find_packages
 
-# with open("README.md", "r") as fh:
-#     long_description = fh.read()
+with open("README.md", "r") as fh:
+    long_description = fh.read()
 
 setup(
     name="barcodeSpliter",
-    version="1.5",
+    version="1.6",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     description = '"barcodeSpliter" can use barcode label to \
@@ -19,11 +19,13 @@ setup(
             'barcodeSpliter = barcodeSpliter:main'
         ]
     },
+    long_description=long_description,
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: Apache Software License",
         "Operating System :: OS Independent",
     ],
+    include_package_data=True,
     package_data = {
         '':['*.gz','*.tsv']
     },
