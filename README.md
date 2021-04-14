@@ -1,12 +1,31 @@
 # barcodeSpliter
 
-"barcodespliter" is a simple command-line tool that can split the mix-sampled sequencing by the barcode label, that is, demultiplex the sample. Currently at version V1.6, I have implemented this functionality most directly due to optimization issues that may require you to run more memory than the sequenced files. 
+"barcodeSpliter" is a simple command-line tool that can split the mix-sampled sequencing by the barcode label, that is, demultiplex the sample. Currently at version V1.6, I have implemented this functionality most directly due to optimization issues that may require you to run more memory than the sequenced files. 
 
-TO DO LIST:
+## Installation
+
+```
+# simple run
+pip install barcodeSpliter
+
+# if need upgrade
+
+pip install -U barcodeSpliter
+```
+
+## E.g.:
+
+```
+barcodeSpliter ./example_data/test_r1.fastq.gz ./example_data/test_r2.fastq.gz ./example_data/barcode.tsv
+```
+
+## TO DO LIST:
 
 1. support large sequencing files.
 2. support muti-threads
 3. add function: statistic barcode.
+
+## Usage
 
 ```
 usage: barcodeSpliter [-h] [-sr SEARCHREGION] [-o OUTFOLDER] r1.fastq.gz r2.fastq.gz barcode.csv
