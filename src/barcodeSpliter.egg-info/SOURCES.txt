@@ -1,7 +1,11 @@
 LICENSE
+MANIFEST.in
 README.md
 pyproject.toml
 setup.py
+data/barcode.tsv
+data/test_r1.fastq.gz
+data/test_r2.fastq.gz
 src/barcodeSpliter/__init__.py
 src/barcodeSpliter/barcodeSpliter.py
 src/barcodeSpliter.egg-info/PKG-INFO

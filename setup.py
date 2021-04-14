@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="barcodeSpliter",
-    version="1.6",
+    version="1.8",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     description = '"barcodeSpliter" can use barcode label to \
@@ -26,9 +26,10 @@ setup(
         "License :: OSI Approved :: Apache Software License",
         "Operating System :: OS Independent",
     ],
-    include_package_data=True,
-    package_data = {
-        '':['*.gz','*.tsv']
-    },
+    # include_package_data=True,
+    # package_data = {
+    #     'data':["*.gz","*.tsv"]
+    # },
+    # data_files=[("./data/",["barcode.tsv","test_r1.fastq.gz","test_r2.fastq.gz"])],
     python_requires='>=3.6',
 )
