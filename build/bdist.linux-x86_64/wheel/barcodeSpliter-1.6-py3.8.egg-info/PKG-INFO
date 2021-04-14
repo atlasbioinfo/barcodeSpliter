@@ -1,0 +1,41 @@
+Metadata-Version: 2.1
+Name: barcodeSpliter
+Version: 1.6
+Summary: "barcodeSpliter" can use barcode label to         separate different samples in mixed-sample sequencing.
+Home-page: https://github.com/atlasbioinfo/barcodeSpliter
+Author: Haopeng Yu
+Author-email: atlasbioin4@gmail.com
+License: Apache-2.0
+Description: # barcodeSpliter
+        
+        "barcodespliter" is a simple command-line tool that can split the mix-sampled sequencing by the barcode label, that is, demultiplex the sample. Currently at version V1.6, I have implemented this functionality most directly due to optimization issues that may require you to run more memory than the sequenced files. 
+        
+        TO DO LIST:
+        
+        1. support large sequencing files.
+        2. support muti-threads
+        3. add function: statistic barcode.
+        
+        ```
+        usage: barcodeSpliter [-h] [-sr SEARCHREGION] [-o OUTFOLDER] r1.fastq.gz r2.fastq.gz barcode.csv
+        
+        This software can use barcode label to separate different samples in mixed-sample sequencing.
+        
+        positional arguments:
+          r1.fastq.gz           Sequencing reads, R1. Also support uncompressed format, like: r1.fastq
+          r2.fastq.gz           Sequencing reads, R2. Also support uncompressed format, like: r2.fastq
+          barcode.csv           csv file contains barcode info. eg:Barcode01,TAACTCGG,TAACAGTT
+        
+        optional arguments:
+          -h, --help            show this help message and exit
+          -sr SEARCHREGION, --searchRegion SEARCHREGION
+                                Barcode search region.Default is 20, means the first 20nt of reads.
+          -o OUTFOLDER, --outfolder OUTFOLDER
+                                The name of output folder can be customized. Default: ./Output/
+        ```
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
