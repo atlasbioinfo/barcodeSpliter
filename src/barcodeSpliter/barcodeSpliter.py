@@ -132,7 +132,7 @@ def main():
 
         if (not header1):
             break
-        barcodeLabel=judgeIfBarcode(seq1,seq2,barcodeInfo,args.searchRegion)
+        barcodeLabel=judgeIfBarcode(seq1,seq2,barcodeInfo,int(args.searchRegion))
         for b in barcodeLabel:
             if (barcodeLabel[b]):
                 readsInfoR1[b].append(header1)
@@ -152,11 +152,10 @@ def main():
             with gzip.open(os.path.join(args.outfolder,b+".R2.fastq.gz"),"w") as out2:
                 out1.write(str("\n".join(readsInfoR1[b])+"\n").encode())
                 out2.write(str("\n".join(readsInfoR2[b])+"\n").encode())
+    print("Success!")
     r1f.close()
     r2f.close()
-    
 
 if __name__ == "__main__":
-    main()
-    print("Success!")       
+    main()         
 

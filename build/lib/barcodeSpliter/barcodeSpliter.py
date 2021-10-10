@@ -132,7 +132,7 @@ def main():
 
         if (not header1):
             break
-        barcodeLabel=judgeIfBarcode(seq1,seq2,barcodeInfo,args.searchRegion)
+        barcodeLabel=judgeIfBarcode(seq1,seq2,barcodeInfo,int(args.searchRegion))
         for b in barcodeLabel:
             if (barcodeLabel[b]):
                 readsInfoR1[b].append(header1)
