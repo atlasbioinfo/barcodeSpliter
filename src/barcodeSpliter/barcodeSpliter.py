@@ -35,16 +35,23 @@ def getBarcodeInfo(file):
             barcodeInfo[tmp[0]]=[tmp[1],tmp[2],trans(tmp[1]),trans(tmp[2])]
     return barcodeInfo
 
-def initalDict(barcodeInfo):
+def initalDict(outfolder,barcodeInfo):
     statBarcode={}
-    readsInfoR1={}
-    readsInfoR2={}
+    # readsInfoR1={}
+    # readsInfoR2={}
     
+    # for barName in barcodeInfo:
+    #     statBarcode[barName]=[0 for i in range(16)]
+    #     readsInfoR1[barName]=[]
+    #     readsInfoR2[barName]=[]
+
+    outputR1={}
+    outputR2={}
     for barName in barcodeInfo:
-        statBarcode[barName]=[0 for i in range(16)]
-        readsInfoR1[barName]=[]
-        readsInfoR2[barName]=[]
-    return [statBarcode,readsInfoR1,readsInfoR2]
+        outputR1[barName]=gzip.open(os.path.join(outfolder,barName+".R1.fastq.gz"),"w")
+        outputR2[barName]=gzip.open(os.path.join(outfolder,barName+".R2.fastq.gz"),"w")
+
+    return [statBarcode,outputR1,outputR2]
 
 def findRes(num):
     if (num==-1):
@@ -96,7 +103,8 @@ def main():
     # # Initial dict
     barcodeInfo=getBarcodeInfo(args.b)
     # statBarcode功能待完善
-    statBarcode,readsInfoR1,readsInfoR2=initalDict(barcodeInfo)
+    # statBarcode,readsInfoR1,readsInfoR2=initalDict(args.outfolder,barcodeInfo)
+    statBarcode,outR1,outR2=initalDict(args.outfolder,barcodeInfo)
     if (args.r1.split(".")[-1]=="gz"):
         r1f=gzip.open(args.r1,"r")
     else:
@@ -135,23 +143,22 @@ def main():
         barcodeLabel=judgeIfBarcode(seq1,seq2,barcodeInfo,int(args.searchRegion))
         for b in barcodeLabel:
             if (barcodeLabel[b]):
-                readsInfoR1[b].append(header1)
-                readsInfoR1[b].append(seq1)
-                readsInfoR1[b].append(quaHeader1)
-                readsInfoR1[b].append(quality1)
+                outR1[b].write(str(header1+"\n").encode())
+                outR1[b].write(str(seq1+"\n").encode())
+                outR1[b].write(str(quaHeader1+"\n").encode())
+                outR1[b].write(str(quality1+"\n").encode())
 
-                readsInfoR2[b].append(header2)
-                readsInfoR2[b].append(seq2)
-                readsInfoR2[b].append(quaHeader2)
-                readsInfoR2[b].append(quality2)
+                outR2[b].write(str(header2+"\n").encode())
+                outR2[b].write(str(seq2+"\n").encode())
+                outR2[b].write(str(quaHeader2+"\n").encode())
+                outR2[b].write(str(quality2+"\n").encode())
 
-                statBarcode[b]
-    print("Write fastq files into the folder....")            
-    for b in readsInfoR1:
-        with gzip.open(os.path.join(args.outfolder,b+".R1.fastq.gz"),"w") as out1:
-            with gzip.open(os.path.join(args.outfolder,b+".R2.fastq.gz"),"w") as out2:
-                out1.write(str("\n".join(readsInfoR1[b])+"\n").encode())
-                out2.write(str("\n".join(readsInfoR2[b])+"\n").encode())
+    # print("Write fastq files into the folder....")            
+    # for b in readsInfoR1:
+    #     with gzip.open(os.path.join(args.outfolder,b+".R1.fastq.gz"),"w") as out1:
+    #         with gzip.open(os.path.join(args.outfolder,b+".R2.fastq.gz"),"w") as out2:
+    #             out1.write(str("\n".join(readsInfoR1[b])+"\n").encode())
+    #             out2.write(str("\n".join(readsInfoR2[b])+"\n").encode())
     print("Success!")
     r1f.close()
     r2f.close()
