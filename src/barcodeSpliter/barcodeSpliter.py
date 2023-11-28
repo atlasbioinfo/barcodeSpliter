@@ -105,11 +105,18 @@ def main():
     # statBarcode功能待完善
     # statBarcode,readsInfoR1,readsInfoR2=initalDict(args.outfolder,barcodeInfo)
     statBarcode,outR1,outR2=initalDict(args.outfolder,barcodeInfo)
+    r1gz=False
     if (args.r1.split(".")[-1]=="gz"):
+        r1gz=True
+    r2gz=False
+    if (args.r2.split(".")[-1]=="gz"):
+        r2gz=True
+    if (r1gz):
         r1f=gzip.open(args.r1,"r")
     else:
         r1f=open(args.r1,"r")
-    if (args.r2.split(".")[-1]=="gz"):
+
+    if (r2gz):
         r2f=gzip.open(args.r2,"r")
     else:
         r2f=open(args.r2,"r")
@@ -128,15 +135,27 @@ def main():
             if (len(loading)==3):
                 loading="."
                 continue
-        header1=str(r1f.readline().strip(),encoding="utf8")
-        seq1=str(r1f.readline().strip(),encoding="utf8")
-        quaHeader1=str(r1f.readline().strip(),encoding="utf8")
-        quality1=str(r1f.readline().strip(),encoding="utf8")
+        if (r1gz):
+            header1=str(r1f.readline().strip(),encoding="utf8")
+            seq1=str(r1f.readline().strip(),encoding="utf8")
+            quaHeader1=str(r1f.readline().strip(),encoding="utf8")
+            quality1=str(r1f.readline().strip(),encoding="utf8")
+        else:
+            header1=r1f.readline().strip()
+            seq1=r1f.readline().strip()
+            quaHeader1=r1f.readline().strip()
+            quality1=r1f.readline().strip()
 
-        header2=str(r2f.readline().strip(),encoding="utf8")
-        seq2=str(r2f.readline().strip(),encoding="utf8")
-        quaHeader2=str(r2f.readline().strip(),encoding="utf8")
-        quality2=str(r2f.readline().strip(),encoding="utf8")
+        if (r2gz):
+            header2=str(r2f.readline().strip(),encoding="utf8")
+            seq2=str(r2f.readline().strip(),encoding="utf8")
+            quaHeader2=str(r2f.readline().strip(),encoding="utf8")
+            quality2=str(r2f.readline().strip(),encoding="utf8")
+        else:
+            header2=r2f.readline().strip()
+            seq2=r2f.readline().strip()
+            quaHeader2=r2f.readline().strip()
+            quality2=r2f.readline().strip()
 
         if (not header1):
             break
